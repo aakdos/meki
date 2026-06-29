@@ -30,6 +30,15 @@ def create_monster_species_table(cursor):
     )
     """)
 
+def create_player_items_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS player_items (
+        user_id INTEGER NOT NULL,
+        item_key TEXT NOT NULL,
+        amount INTEGER NOT NULL DEFAULT 0,
+        PRIMARY KEY (user_id, item_key)
+    )
+    """)
 
 def initialize_database():
     conn = get_connection()
@@ -37,6 +46,7 @@ def initialize_database():
 
     create_users_table(cursor)
     create_monster_species_table(cursor)
+    create_player_items_table(cursor)
 
     conn.commit()
     conn.close()

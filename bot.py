@@ -5,6 +5,7 @@ from discord import app_commands
 from config import DISCORD_TOKEN
 from src.database.init_database import initialize_database
 from src.services.user_service import create_user, get_user
+from src.services.inventory_service import get_inventory
 
 # ============================
 # 데이터베이스 초기화
@@ -115,6 +116,53 @@ async def my_info(interaction: discord.Interaction):
         f"가입일: `{user[3]}`\n"
         f"튜토리얼: {'완료' if user[4] else '미완료'}"
     )
+
+# ============================
+# 인벤토리 명령어
+# ============================
+@bot.tree.command(
+    name="인벤토리",
+    description="내가 보유한 아이템을 확인합니다."
+)
+async def inventory(interaction: discord.Interaction):
+    user_id = interaction.user.id
+
+    user = get_user(user_id)
+
+    if user is None:
+        await interaction.response.send_message(
+            "아직 메키에 가입하지 않았습니다.\n"
+            "`/가입` 명령어로 먼저 게임을 시작해주세요.",
+            ephemeral=True
+        )
+        return
+
+    items = get_inventory(user_id)
+
+    if not items:
+        await interaction.response.send_message(
+            "🎒 **인벤토리**\n\n"
+            "보유한 아이템이 없습니다."
+        )
+        return
+
+    item_names = {
+        "starter_ticket": "스타터 소환권",
+    }
+
+    lines = []
+
+    for item in items:
+        item_key = item[1]
+        amount = item[2]
+        item_name = item_names.get(item_key, item_key)
+
+        lines.append(f"- {item_name} × {amount}")
+
+    await interaction.response.send_message(
+        "🎒 **인벤토리**\n\n" + "\n".join(lines)
+    )
+
 
 # ============================
 # 봇 실행
