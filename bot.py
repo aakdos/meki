@@ -88,6 +88,33 @@ async def join(interaction: discord.Interaction, nickname: str):
         f"이제 메키의 모험을 시작할 수 있습니다."
     )
 
+# ============================
+# 내정보 명령어
+# ============================
+@bot.tree.command(
+    name="내정보",
+    description="내 메키 플레이어 정보를 확인합니다."
+)
+async def my_info(interaction: discord.Interaction):
+    user_id = interaction.user.id
+
+    user = get_user(user_id)
+
+    if user is None:
+        await interaction.response.send_message(
+            "아직 메키에 가입하지 않았습니다.\n"
+            "`/가입` 명령어로 먼저 게임을 시작해주세요.",
+            ephemeral=True
+        )
+        return
+
+    await interaction.response.send_message(
+        f"👤 **플레이어 정보**\n\n"
+        f"닉네임: **{user[2]}**\n"
+        f"Discord: **{user[1]}**\n"
+        f"가입일: `{user[3]}`\n"
+        f"튜토리얼: {'완료' if user[4] else '미완료'}"
+    )
 
 # ============================
 # 봇 실행
