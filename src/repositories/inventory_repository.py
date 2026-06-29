@@ -62,3 +62,24 @@ def add_item(user_id: int, item_key: str, amount: int):
 
     conn.commit()
     conn.close()
+
+def subtract_item(user_id: int, item_key: str, amount: int):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        UPDATE player_items
+        SET amount = amount - ?
+        WHERE user_id = ?
+          AND item_key = ?
+          AND amount >= ?
+        """,
+        (amount, user_id, item_key, amount)
+    )
+
+    conn.commit()
+    affected_rows = cursor.rowcount
+    conn.close()
+
+    return affected_rows > 0

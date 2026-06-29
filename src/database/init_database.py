@@ -1,4 +1,5 @@
 from src.database.database import get_connection
+from src.services.monster_seed_loader import load_monster_species
 
 
 def create_users_table(cursor):
@@ -30,6 +31,7 @@ def create_monster_species_table(cursor):
     )
     """)
 
+
 def create_player_items_table(cursor):
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS player_items (
@@ -40,6 +42,18 @@ def create_player_items_table(cursor):
     )
     """)
 
+
+def create_player_monsters_table(cursor):
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS player_monsters (
+        monster_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        monster_key TEXT NOT NULL,
+        obtained_at TEXT NOT NULL
+    )
+    """)
+
+
 def initialize_database():
     conn = get_connection()
     cursor = conn.cursor()
@@ -47,6 +61,7 @@ def initialize_database():
     create_users_table(cursor)
     create_monster_species_table(cursor)
     create_player_items_table(cursor)
+    create_player_monsters_table(cursor)
 
     conn.commit()
     conn.close()
@@ -56,7 +71,4 @@ def initialize_database():
 
 if __name__ == "__main__":
     initialize_database()
-
-from src.services.monster_seed_loader import load_monster_species
-
-load_monster_species()
+    load_monster_species()

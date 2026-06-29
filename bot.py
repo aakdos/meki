@@ -6,6 +6,7 @@ from config import DISCORD_TOKEN
 from src.database.init_database import initialize_database
 from src.services.user_service import create_user, get_user
 from src.services.inventory_service import get_inventory
+from src.services.summon_service import summon_starter_monster
 
 # ============================
 # 데이터베이스 초기화
@@ -162,7 +163,41 @@ async def inventory(interaction: discord.Interaction):
     await interaction.response.send_message(
         "🎒 **인벤토리**\n\n" + "\n".join(lines)
     )
+# ============================
+# 뽑기 명령어
+# ============================
+@bot.tree.command(
+    name="뽑기",
+    description="소환권을 사용해 몬스터를 뽑습니다."
+)
+async def draw(interaction: discord.Interaction):
+    await interaction.response.defer()
 
+    user_id = interaction.user.id
+
+    user = get_user(user_id)
+
+    if user is None:
+        await interaction.followup.send(
+            "아직 메키에 가입하지 않았습니다.\n"
+            "`/가입` 명령어로 먼저 게임을 시작해주세요.",
+            ephemeral=True
+        )
+        return
+
+    monster = summon_starter_monster(user_id)
+
+    if monster is None:
+        await interaction.followup.send(
+            "사용 가능한 스타터 소환권이 없습니다.",
+            ephemeral=True
+        )
+        return
+
+    await interaction.followup.send(
+        f"🎫 스타터 소환권을 사용했습니다!\n\n"
+        f"🎉 **{monster['name']}** 을(를) 획득했습니다!"
+    )
 
 # ============================
 # 봇 실행
