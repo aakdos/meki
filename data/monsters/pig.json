@@ -1,0 +1,10 @@
+{
+  "key": "pig",
+  "name": "돼지",
+  "region": "henesys",
+  "origin": "pig",
+  "description": "빠른 속도로 달려들어 육중한 몸으로 들이받는 몬스터이다. 한번 목표를 정하면 끝까지 쫓아오는 습성이 있으며, 사냥 후 얻을 수 있는 돼지 머리는 별미로 알려져 있다.",
+  "flavor_text": "브레이크라는 단어를 아직 배우지 못했다.",
+  "icon": "🐷",
+  "image_path": null
+}

@@ -1,0 +1,10 @@
+{
+  "key": "blue_mushroom",
+  "name": "파란버섯",
+  "region": "henesys",
+  "origin": "mushroom",
+  "description": "푸른 갓과 통통한 몸집이 특징인 버섯 몬스터이다. 흔한 버섯 무리와는 달리 개체 수가 적지만, 헤네시스 주변의 버섯 숲에서는 비교적 쉽게 만날 수 있다.",
+  "flavor_text": "주황버섯보다 차분해 보이지만, 딱히 덜 귀찮은 건 아니다.",
+  "icon": "🍄",
+  "image_path": null
+}
