@@ -1,0 +1,10 @@
+{
+  "key": "orange_mushroom",
+  "name": "주황버섯",
+  "region": "henesys",
+  "origin": "mushroom",
+  "description": "메이플 아일랜드와 빅토리아 아일랜드 전역에서 볼 수 있는 대표적인 버섯 몬스터이다.",
+  "flavor_text": "맛있는 냄새를 맡으면 어디든 따라간다.",
+  "icon": "🍄",
+  "image_path": null
+}
