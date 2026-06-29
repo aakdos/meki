@@ -46,3 +46,7 @@ def initialize_database():
 
 if __name__ == "__main__":
     initialize_database()
+
+from src.services.monster_seed_loader import load_monster_species
+
+load_monster_species()
